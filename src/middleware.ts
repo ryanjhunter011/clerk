@@ -6,10 +6,6 @@ const isPublicRoute = createRouteMatcher([
   '/sign-up(.*)'
 ])
 
-const isProtectedRoute = createRouteMatcher(
-  ['/dashbpard(.*)']
-)
-
 export default clerkMiddleware(async (auth, request) => {
 
   if (!isPublicRoute(request)) {

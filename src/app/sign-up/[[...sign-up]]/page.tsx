@@ -1,9 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSignUp } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 
 export default function Page() {
 	const [error, setError] = useState("");
@@ -174,7 +175,12 @@ export default function Page() {
 							</div>
 						</div>
 						<div className="flex flex-wrap w-full justify-between mt-5">
-							<a href='/sign-in' className='text-indigo-500 font-bold'>Sign In</a>
+							<Link 
+								href='/sign-up'
+								className='text-indigo-500 font-bold'
+							>
+								Sign In
+							</Link>
 						</div>
 					</div>
 				</div>

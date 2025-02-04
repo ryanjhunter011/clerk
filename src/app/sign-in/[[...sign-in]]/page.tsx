@@ -3,6 +3,8 @@
 import * as React from 'react'
 import { useSignIn } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function LoginPage() {
   const { isLoaded, signIn, setActive } = useSignIn()
@@ -44,7 +46,7 @@ export default function LoginPage() {
         redirectUrlComplete: '/dashboard',
       })
     } catch (err: any) {
-      setError('Google sign-in failed. Please try again.')
+      setError(err);
     }
   }
 
@@ -63,7 +65,13 @@ export default function LoginPage() {
 								className="mb-5 tracking-wide font-semibold bg-white text-gray-900 w-full py-3 border border-gray-300 rounded-lg hover:bg-gray-200 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
 								onClick={handleGoogleSignIn}
 							>
-								<img className="w-6 h-6 mr-2" src="https://img.icons8.com/color/48/google-logo.png" alt="Google Logo" />
+								<Image 
+									className="w-6 h-6 mr-2" 
+									src="https://img.icons8.com/color/48/google-logo.png" 
+									alt="Google Logo" 
+									width={24}
+									height={24}
+								/>
 								Sign in with Google
 							</button>
 							<div className="flex items-center my-5">
@@ -100,8 +108,8 @@ export default function LoginPage() {
 						</div>
 					</div>
 					<div className="flex flex-wrap w-full justify-between mt-5">
-						<a href='/reset-password' className='text-indigo-500 font-bold'>Reset Password</a>
-						<a href='/sign-up' className='text-indigo-500 font-bold'>Sign Up</a>
+						<Link href='/reset-password' className='text-indigo-500 font-bold'>Reset Password</Link>
+						<Link href='/sign-up' className='text-indigo-500 font-bold'>Sign Up</Link>
 					</div>
 				</div>
 			</div>

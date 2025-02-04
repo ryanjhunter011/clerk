@@ -18,6 +18,7 @@ export default async function DashboardPage() {
   }
 
   const listUsers = await UserInfo();
+  console.log(listUsers)
 
   return (
     <div className="min-w-screen min-h-screen bg-gray-100 text-gray-900">
