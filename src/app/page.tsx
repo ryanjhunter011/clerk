@@ -1,4 +1,4 @@
-import { SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignOutButton, UserButton } from "@clerk/nextjs";
 
 export default async function Home() {
   return (
@@ -13,6 +13,10 @@ export default async function Home() {
               Sign In
             </a>
           </SignedOut>
+          <SignedIn>
+            <UserButton />
+            <SignOutButton />
+          </SignedIn>
         </div>
       </main>
     </div>

@@ -33,6 +33,21 @@ export default function LoginPage() {
     }
   }
 
+  // Handle Google Sign-In
+  const handleGoogleSignIn = async () => {
+    if (!isLoaded) return
+
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy: 'oauth_google',
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/dashboard',
+      })
+    } catch (err: any) {
+      setError('Google sign-in failed. Please try again.')
+    }
+  }
+
   return (
     <div className="min-w-screen min-h-screen bg-gray-100 text-gray-900 flex justify-center">
         <div className=" bg-white flex justify-center flex-1">
@@ -44,6 +59,18 @@ export default function LoginPage() {
 					{error && <p className='text-red-500 mb-5'>{error}</p>}
 					<div className="w-full flex-1">
 						<div className="mx-auto max-w-xs">
+							<button 
+								className="mb-5 tracking-wide font-semibold bg-white text-gray-900 w-full py-3 border border-gray-300 rounded-lg hover:bg-gray-200 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+								onClick={handleGoogleSignIn}
+							>
+								<img className="w-6 h-6 mr-2" src="https://img.icons8.com/color/48/google-logo.png" alt="Google Logo" />
+								Sign in with Google
+							</button>
+							<div className="flex items-center my-5">
+								<hr className="flex-1 border-t border-gray-300" />
+								<span className="mx-4 text-gray-500">or</span>
+								<hr className="flex-1 border-t border-gray-300" />
+							</div>
 							<form onSubmit={handleSubmit}>
 								<input 
 									className="w-full px-4 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white" 
