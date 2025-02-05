@@ -31,7 +31,7 @@ export default function Page() {
 			})
 
 			setVerifying(true)
-		} catch (err: any) {
+		} catch (err: unknown) {
 			console.error(JSON.stringify(err, null, 2))
 		}
 	}
@@ -78,30 +78,39 @@ export default function Page() {
 			} else {
 				console.error(JSON.stringify(completeSignUp, null, 2))
 			}
-		} catch (err: any) {
+		} catch (err: unknown) {
 				console.error('Error:', JSON.stringify(err, null, 2))
 		}
 	}
 
 	const handleGoogleSignUp = async () => {
 		if (!isLoaded) return;
-
+	
 		try {
 			await signUp.authenticateWithRedirect({
 				strategy: "oauth_google",
 				redirectUrl: "/sso-callback",
 				redirectUrlComplete: "/dashboard",
 			});
-		} catch (err: any) {
-			if (err.code === 'authentication_failed') {
-				setError("Authentication with Google failed. Please try again.");
-			} else if (err.code === 'form_identifier_exists') {
-				setError("An account with this Google email already exists. Please sign in instead.");
+		} catch (err: unknown) {
+			// Ensure err is an object before accessing properties
+			if (err instanceof Error) {
+				// Type assertion for expected error structure
+				const errorObject = err as { code?: string; errors?: { message?: string }[] };
+	
+				if (errorObject.code === "authentication_failed") {
+					setError("Authentication with Google failed. Please try again.");
+				} else if (errorObject.code === "form_identifier_exists") {
+					setError("An account with this Google email already exists. Please sign in instead.");
+				} else {
+					setError(errorObject.errors?.[0]?.message || "An error occurred during Google sign-up. Please try again.");
+				}
 			} else {
-				setError(err.errors[0]?.message || "An error occurred during Google sign-up. Please try again.");
+				setError("An unexpected error occurred. Please try again.");
 			}
 		}
 	};
+	
 
 	if (verifying) {
 		return (
